@@ -1,0 +1,157 @@
+html, body {
+    background-image: url("/static/site_images/background_circles.jpg");
+
+    /*background-size:100%;*/
+    /*margin: 0;
+    width: auto;*/
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+
+
+    min-height: 100vh;
+
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+
+body:empty {
+    width: 100%
+    min-height: 100vh;
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+
+}
+
+.head_menu {
+    display: flex;
+    align-items: center;
+    list-style-type: none;
+    flex-direction: row;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 0;
+    height: 50px;
+
+    background-color: black;
+
+    justify-content: space-between;
+
+
+
+    /*display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+    white-space: nowrap;
+    background-color: black;
+
+    height: 50px;
+    width: 100%;
+
+    padding-left: 0;
+
+    margin-top: 0;
+    margin-bottom: 0;*/
+}
+
+.head_menu__item {
+
+}
+
+.head_menu__item:nth-child(1) {
+    margin-left: 40px;
+}
+/*
+.head_menu__item:nth-child(n+2) {
+    padding-left: 30px;
+}
+*/
+
+.head_menu__item:last-child {
+    margin-right: 40px;
+}
+
+
+.head_menu__link {
+    color: white;
+    text-decoration: none;
+
+    cursor: pointer;
+}
+
+.main_menu {
+    display: flex;
+    align-items: center;
+    list-style-type: none;
+    flex-direction: row;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 0;
+    height: 50px;
+
+    background-color: #abe9f7;
+
+}
+
+.main_menu__item {
+    display: inline-block;
+    margin-right: 35px;
+    transition: 0.3s;
+    text-align: center;
+
+
+}
+
+.main_menu__link {
+    padding: 5px;
+
+    text-decoration: none;
+    color: black;
+}
+
+.main_menu__link:hover {
+  outline: none;
+  box-shadow: 0 0 0 2px #7ed3e5;
+  background: #7ed3e5;
+  border-radius: 15px;
+}
+
+.main_menu__item:nth-child(1) {
+    margin-left: 40px;
+}
+
+.main_menu__item:hover {
+    transform: scale(1.15);
+}
+
+
+
+.content_text {
+
+    text-indent: 1.5em; /* отступ с красной строки */
+}
+
+.content {
+    flex: 1 0 auto;
+
+}
+
+.footer {
+
+    height: 100px;
+    min-height: 100px;
+    width: 100%;
+
+
+    background-color: #333333;
+}
+

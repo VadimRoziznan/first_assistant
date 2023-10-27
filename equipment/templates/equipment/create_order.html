@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/orders.css' %}">
+    <link rel="stylesheet" href="{% static 'css/create_order.css' %}">
+    <title>Title</title>
+</head>
+<body>
+<div class="header">
+      <nav>
+          <ul class="head_menu">
+              <li class="head_menu__item">
+                  <a class="head_menu__link" href="{% url 'home' %}">
+                      ТОИР Управление ремонтами и обслуживанием оборудования
+                  </a>
+              </li>
+              <li class="head_menu__item">
+                  <a class="head_menu__link" href="#">
+                      Личный кабинет
+                  </a>
+              </li>
+          </ul>
+      </nav>
+      <nav>
+          <ul class="main_menu">
+              <li class="main_menu__item">
+                  <a class="main_menu__link" href="{% url 'home' %}">
+                      Главная
+                  </a>
+              </li>
+              <li class="main_menu__item">
+                  <a class="main_menu__link" href="{% url 'order' %}">
+                      Документооборот
+                  </a>
+              </li>
+              <li class="main_menu__item">
+                  <a class="main_menu__link" href="#">
+                      Архив
+                  </a>
+              </li>
+              <li class="main_menu__item">
+                  <a class="main_menu__link" href="#">
+                      Журнал
+                  </a>
+              </li>
+          </ul>
+      </nav>
+  </div>
+<main class="content">
+    <div class="menu">
+        <nav>
+            <ul class="navigation-menu">
+                <li class="navigation-menu__item">
+                    <button class="navigation-menu__button" type="button">
+                        <a href="{% url 'order' %}" class="navigation-menu__link">
+                            <span class="navigation-menu__text">Все служебные записки</span>
+                        </a>
+                    </button>
+                </li>
+                <li class="navigation-menu__item">
+                    <button class="navigation-menu__button" type="button">
+                        <a href="{% url 'create_order' %}" class="navigation-menu__link">
+                            <span class="navigation-menu__text">Создать заявку</span>
+                        </a>
+                    </button>
+                </li>
+                <li class="navigation-menu__item">
+                    <button class="navigation-menu__button" type="button">
+                        <a href="#" class="navigation-menu__link">
+                            <span class="navigation-menu__text">Редактировать заявку</span>
+                        </a>
+                    </button>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <div class="form-block">
+        <div class="title">
+            <h1 class="order-title">Регистрация новой заявки:</h1>
+        </div>
+        <div class="order-form-block">
+            <form id="order-form" action="" method="POST" class="order-form">
+                <div class="order-container">
+                    <div class="equipment-container">
+                        <div class="equipment">
+                            <label class="select-equipment">
+                                <span class="field-name">Номер цеха(корпуса):</span>
+                                <select class="select_equipment_data" name="equipment_class"  required>
+                                    {% for el in equipment_class %}
+                                    <option value="" hidden></option>
+                                    <option class="option-values"  value="{{ el.name }}">{{ el.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </label>
+                        </div>
+                        <div class="equipment">
+                            <label class="select-equipment">
+                                <span class="field-name">Номер пролёта:</span>
+                                <select class="select_equipment_data" name="equipment_class"  required>
+                                    {% for el in equipment_class %}
+                                    <option value="" hidden></option>
+                                    <option class="option-values" value="{{ el }}">{{ el }}</option>
+                                    {% endfor %}
+                                </select>
+                            </label>
+                        </div>
+                        <div class="equipment">
+                            <label class="select-equipment">
+                                <span class="field-name">Класс оборудования:</span>
+                                <select class="select_equipment_data" name="equipment_class"  required>
+                                    {% for el in equipment_class %}
+                                    <option value="" hidden></option>
+                                    <option class="option-values" value="{{ el.get_group_display }}">{{ el.get_group_display }}</option>
+                                    {% endfor %}
+                                </select>
+                            </label>
+                        </div>
+                        <div class="equipment">
+                            <label class="select-equipment">
+                                <span class="field-name">Наименование оборудования:</span>
+                                <select class="select_equipment_data" name="equipment_name"  required>
+                                    {% for el in equipment_class %}
+                                    <option value="" hidden></option>
+                                    <option class="option-values" value="{{ el }}">{{ el }}</option>
+                                    {% endfor %}
+                                </select>
+                            </label>
+                        </div>
+                        <div class="equipment">
+                            <label class="select-equipment">
+                                <span class="field-name">Основание:</span>
+                                <select class="select_equipment_data" name="equipment_name"  required>
+                                    {% for el in equipment_class %}
+                                    <option value="" hidden></option>
+                                    <option class="option-values" value="{{ el }}">{{ el }}</option>
+                                    {% endfor %}
+                                </select>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="order-text">
+                        <span class="field-name">Список необходимых материалов:</span>
+                        <textarea class="order-textarea" name="create-order" id="" cols="70" rows="7" maxlength="1000"
+                                  required spellcheck="true" wrap="hard" placeholder="Заполните форму..."></textarea>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+    <div class="create-order">
+        <button form="order-form" class="create-order-button" type="submit">Создать</button>
+        <button form="order-form" class="reset-order-button" type="reset">Сбросить</button>
+    </div>
+</main>
+<div class="footer">
+</div>
+</body>
+</html>

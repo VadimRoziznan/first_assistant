@@ -1,0 +1,41 @@
+
+
+.content {
+    box-sizing: box;
+    font-family: Arial, Helvetica, sans-serif;
+
+    width: 1300px;
+    height: auto;
+
+    border:1px solid #dedede;
+    box-shadow: 0 1px 20px rgba(0, 0, 0, 0.4);
+    border-radius: 5px;
+    background: white;
+
+    padding: 10px 25px;
+
+
+    margin-bottom: 50px;
+    margin-left: auto;
+    margin-right: auto;
+
+    text-align: justify;
+
+}
+
+.content:last-child {
+
+}
+
+.content:nth-child(1) {
+    margin-top: 140px;
+    margin-bottom: 50px;
+}
+
+
+
+
+
+.content_text {
+    text-indent: 1.5em; /* отступ с красной строки */
+}

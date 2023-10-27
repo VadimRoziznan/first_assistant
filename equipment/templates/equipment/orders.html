@@ -1,0 +1,168 @@
+
+
+<!DOCTYPE html>
+{% load static %}
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/orders.css' %}">
+    <title>Домашняя страница</title>
+
+</head>
+<body class="page">
+<div class="header">
+      <nav>
+          <ul class="head_menu">
+              <li class="head_menu__item">
+                  <a class="head_menu__link" href="{% url 'home' %}">
+                      ТОИР Управление ремонтами и обслуживанием оборудования
+                  </a>
+              </li>
+              <li class="head_menu__item">
+                  <a class="head_menu__link" href="#">
+                      Личный кабинет
+                  </a>
+              </li>
+          </ul>
+      </nav>
+      <nav>
+          <ul class="main_menu">
+              <li class="main_menu__item">
+                  <a class="main_menu__link" href="{% url 'home' %}">
+                      Главная
+                  </a>
+              </li>
+              <li class="main_menu__item">
+                  <a class="main_menu__link" href="{% url 'order' %}">
+                      Документооборот
+                  </a>
+              </li>
+              <li class="main_menu__item">
+                  <a class="main_menu__link" href="#">
+                      Архив
+                  </a>
+              </li>
+              <li class="main_menu__item">
+                  <a class="main_menu__link" href="#">
+                      Журнал
+                  </a>
+              </li>
+          </ul>
+      </nav>
+  </div>
+<main class="content">
+    <div class="menu">
+        <nav>
+            <ul class="navigation-menu">
+                <li class="navigation-menu__item">
+                    <button class="navigation-menu__button" type="button">
+                        <a href="{% url 'order' %}" class="navigation-menu__link">
+                            <span class="navigation-menu__text">Все служебные записки</span>
+                        </a>
+                    </button>
+                </li>
+                <li class="navigation-menu__item">
+                    <button class="navigation-menu__button" type="button">
+                        <a href="{% url 'create_order' %}" class="navigation-menu__link">
+                            <span class="navigation-menu__text">Создать заявку</span>
+                        </a>
+                    </button>
+                </li>
+                <li class="navigation-menu__item">
+                    <button class="navigation-menu__button" type="button">
+                        <a href="#" class="navigation-menu__link">
+                            <span class="navigation-menu__text">Редактировать заявку</span>
+                        </a>
+                    </button>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <div class="menu">
+        <form class="select-form" method="GET" action="">
+            {% csrf_token %}
+            <label class="select-group">
+                <span class="field-name">Статус заявки:</span>
+                <select class="select" name="order_status">
+                    <option value="ALL" selected>Все</option>
+                    <option value="OPEN">Открытые</option>
+                    <option value="FULFILLED">Исполнено</option>
+                    <option value="NOT_RELEVANT">Неактуально</option>
+                    <option value="DRAFT">Черновик</option>
+                </select>
+            </label>
+            <label class="select-group">
+                <span class="field-name">Класс оборудования:</span>
+                <select class="select" name="equipment_class">
+                    <option value="ALL" selected>Все</option>
+                    <option value="HORIZONTAL_BORING_MACHINE">Горизонтально - расточные станки</option>
+                    <option value="SCREW_CUTTING_MACHINE">Токарно - винторезные станки</option>
+                    <option value="TURNING_LATHES_MACHINE">Токарно - карусельные станки</option>
+                    <option value="FORGING_STAMPING_EQUIPMENT">Кузнечно - штамповочное оборудование</option>
+                    <option value="HANDLING_EQUIPMENT">Подъемно-транспортное оборудование</option>
+                    <option value="OTHER">Другое</option>
+                </select>
+            </label>
+            <label class="select-group">
+                <span class="field-name">С:</span>
+                <input type="month" class="search-field">
+                <span class="field-name">По:</span>
+                <input type="month" class="search-field">
+            </label>
+            <div class="form-button">
+                <button type="submit" class="form-button__item">Применить</button>
+            </div>
+        </form>
+        <form class="search-form" method="GET" action="">
+            <label class="search-group">
+                <input class="search-field" name="query" placeholder="Поиск" required>
+            </label>
+            <div class="form-button">
+                <button type="submit" class="form-button__item">Найти</button>
+            </div>
+        </form>
+    </div>
+    <div class="orders">
+        <table class="orders-table">
+            <caption class="table-header">
+                <span class="table-header__item">Список служебных записок на приобретение материалов:</span>
+            </caption>
+          <tr>
+            <th class="orders_header__item">Класс:</th>
+            <th class="orders_header__item">Наименование:</th>
+            <th class="orders_header__item">Статус оборудования:</th>
+            <th class="orders_header__item">Краткое описание заявки:</th>
+            <th class="orders_header__item">Дата создания:</th>
+            <th class="orders_header__item">Дата обновления:</th>
+            <th class="orders_header__item">Статус заявки:</th>
+              <th class="orders_header__item">Скачать файл:</th>
+          </tr>
+            {% for el in orders_and_equipment %}
+            {% if forloop.counter|divisibleby:2 %}
+            <tr class="even-row">
+            {% else %}
+            <tr class="odd-row">
+            {% endif %}
+            <td class="orders__item">{{ el.equipment_name.get_group_display }}</td>
+            <td class="orders__item">{{ el.equipment_name.name }}</td>
+            <td class="orders__item">{{ el.equipment_name.get_status_display }}</td>
+            <td class="orders__item">{{ el.short_description }}</td>
+            <td class="orders__item">{{ el.created_at|date:"d.m.Y H:i" }}</td>
+            <td class="orders__item">{{ el.updated_at|date:"d.m.Y H:i"}}</td>
+            <td class="orders__item">{{ el.get_status_display }}</td>
+            <td class="orders__item">
+                <a href="{{ el.orders_files.url }}" download="">
+                    <img class="download-img" src="/static/site_images/download.png">
+                </a>
+            </td>
+          </tr>
+            {% endfor %}
+        </table>
+    </div>
+</main>
+
+  <div class="footer">
+  </div>
+</body>
+</html>

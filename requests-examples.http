@@ -1,0 +1,60 @@
+# примеры API-запросов
+
+@baseUrl = http://localhost:8000/api
+
+# получение списка всех заявок
+GET {{baseUrl}}/orders/
+Content-Type: application/json
+
+###
+
+# получение списка всех станков
+GET {{baseUrl}}/machine/
+Content-Type: application/json
+
+###
+
+# Добовление студента в Students
+POST {{baseUrl}}/students/
+Content-Type: application/json
+
+{
+  "name": "Ira"
+}
+
+###
+
+# Добовление курса в Courses
+POST {{baseUrl}}/courses/
+Content-Type: application/json
+
+{
+  "name": "C++",
+  "students": [
+    {
+      "id": 1,
+      "name": "Gora",
+      "birth_date": null
+    }
+  ]
+}
+
+###
+
+# попытка поменять курс
+PATCH {{baseUrl}}/courses/2/
+Content-Type: application/json
+
+{
+  "name": "C++",
+  "students": [
+    {
+      "id": 1,
+      "name": "Gora",
+      "birth_date": null
+    }
+  ]
+}
+
+###
+
