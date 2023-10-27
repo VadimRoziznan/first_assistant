@@ -1,3 +1,5 @@
+import os
+
 from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render
@@ -6,9 +8,11 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.filters import SearchFilter, OrderingFilter
 from django.db.models import F
 
+from pathlib import Path
 from equipment.models import Orders, Machine
 from equipment.serializers import OrdersSerializer, MachineNameSerializer
 
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 class OrdersViewSet(ModelViewSet):
     queryset = Orders.objects.all()
@@ -23,6 +27,7 @@ class MachineViewSet(ModelViewSet):
 
 
 def home_view(request):
+    print(os.path.join(BASE_DIR, 'static'))
     template = "equipment/home.html"
     context = {}
     return render(request, template, context)
