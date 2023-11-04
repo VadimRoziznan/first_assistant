@@ -39,12 +39,6 @@
     color: black;
 }
 
-.navigation-menu__text {
-
-}
-
-
-
 .orders {
      display: flex;
 
@@ -64,9 +58,6 @@
     box-shadow: 0 1px 20px rgba(0, 0, 0, 0.4);
     border-radius: 5px;
     background: white;
-
-
-
 }
 
 .table-header {
@@ -105,17 +96,10 @@ th, td {
     background: #e1e3e3;
 }
 
-
-
-
-
 .form-group {
     display: inline-block;
-
-
     width: 1450px;
     height: 50px;
-
 }
 
 .search-group {
@@ -124,29 +108,17 @@ th, td {
   height: auto;
 }
 
-
-
 .menu {
-
     display: flex;
-
     border: border-box;
-
     box-shadow: 0 1px 20px rgba(0, 0, 0, 0.4);
     border-radius: 5px;
-
-
-
     border: 1px solid #cbd1d4;
     background-color: #e1e3e3;
-
     width: 1450px;
     height: 50px;
-
-
     margin-left: auto;
     margin-right: auto;
-
 }
 
 .menu:first-of-type {
@@ -164,32 +136,22 @@ th, td {
     height: auto;
 }
 
-
-
 .select-group {
     display: flex;
-
 }
-
 
 .select {
   display: inline-block;
   width: 100px;
   height: auto;
-
   padding-left: 10px;
   padding-right: 10px;
-
   margin: auto 0 auto 15px;
-
-
   border: 1px solid #cbd1d4;
   background-color: #f9f9f9;
-
   font-size: 14px;
   font-family: Arial, sans-serif;
   color: #333333;
-
 }
 
 .field-name {
@@ -198,52 +160,38 @@ th, td {
   width: auto;
   height: auto;
   white-space: nowrap;
-
-
-
   margin: auto 0 auto 15px;
-
   font-size: 14px;
   font-family: Arial, sans-serif;
   font-weight: bold;
   color: #333333;
-
 }
 
 .form-button {
     display: inline-block;
-
     width: auto;
     height: auto;
-
     margin-top: auto;
     margin-bottom: auto;
     margin-left: 25px;
-
 }
 
-
 .search-form {
-display: flex;
+    display: flex;
     width: auto;
     height: auto;
     margin: auto 15px auto auto;
-
 }
-
-
 .search-field {
     display: inline-block;
-  box-sizing: content-box;
-  width: auto;
-  height: auto;
-
-  margin: auto 0 auto 15px;
-
-  font-size: 14px;
-  font-family: Arial, sans-serif;
-  font-weight: bold;
-  color: #333333;
+    box-sizing: content-box;
+    width: auto;
+    height: auto;
+    margin: auto 0 auto 15px;
+    font-size: 14px;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    color: #333333;
 }
 
 .download-img {
@@ -254,20 +202,15 @@ display: flex;
 }
 
 /*.form-block {
-     display: flex;
-
+    display: flex;
     border: 1px solid #cbd1d4;
     background-color: #f9f9f9;
-
     margin-top: 15px;
     margin-bottom: 50px;
     margin-left: auto;
     margin-right: auto;
-
     width: 1450px;
     height: 1000px;
-
-
     box-shadow: 0 1px 20px rgba(0, 0, 0, 0.4);
     border-radius: 5px;
     background: white;
