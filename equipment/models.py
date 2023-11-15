@@ -29,6 +29,20 @@ class MachineGroupChoices(models.TextChoices):
     OTHER = "OTHER", "ДРУГОЕ"
 
 
+class MachineGroup(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    group = models.TextField(
+        choices=MachineGroupChoices.choices,
+        unique=True
+    )
+
+    class Meta:
+        db_table = 'MachineGroup'
+        verbose_name_plural = 'Группы'
+
+    def __str__(self):
+        return self.get_group_display()
+
 class Machine(models.Model):
 
     def machine_file_path(self, filename):
@@ -51,11 +65,18 @@ class Machine(models.Model):
         choices=MachineStatusChoices.choices,
         default=MachineStatusChoices.OPERATED,
     )
-    group = models.TextField(
-        choices=MachineGroupChoices.choices,
-        default=MachineGroupChoices.OTHER,
+    # group = models.TextField(
+    #     choices=MachineGroupChoices.choices,
+    #     default=MachineGroupChoices.OTHER,
+    # )
+    equipment_group = models.ForeignKey(
+        MachineGroup, on_delete=models.PROTECT,
+        blank=True,
+        related_name="equipment_group",
+        null=True,
     )
     factory_floor = models.IntegerField(default=1)
+    factory_number = models.IntegerField(default=1)
 
     class Meta:
         db_table = 'Machine'
@@ -66,21 +87,21 @@ class Machine(models.Model):
 
 
 class Archive(models.Model):
+
     name = models.CharField(max_length=100)
 
 
 class Orders(models.Model):
 
-    def orders_file_path(instance, filename):
+    def orders_file_path(self, filename):
         # Получаем имя связанного оборудования
-        equipment_name = instance.equipment_name.name
-
+        print(self.id)
+        equipment_name = self.equipment_name.name
         # Формируем путь: "photos/machines/<equipment_name>/<filename>"
         path = f'orders/{equipment_name}/{filename}'
-
         return path
 
-
+    id = models.BigAutoField(primary_key=True)
     equipment_name = models.ForeignKey(
         Machine, on_delete=models.CASCADE,
         related_name="machine"
@@ -97,9 +118,12 @@ class Orders(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+
+
     class Meta:
         db_table = 'Orders'
         verbose_name_plural = 'Заявки'
+
 
 
 class Stock(models.Model):

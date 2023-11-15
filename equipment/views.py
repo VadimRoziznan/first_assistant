@@ -37,7 +37,7 @@ def orders_view(request):
     template = "equipment/orders.html"
 
     order_status = request.GET.get('order_status', 'ALL')
-    equipment_group = request.GET.get('equipment_class', 'ALL')
+    equipment_group = request.GET.get('equipment_class', 1)
     query = request.GET.get('query')
     if query:
         dataset = Orders.objects.raw(
@@ -52,13 +52,13 @@ def orders_view(request):
             "Orders".short_description LIKE %s
             ''', (f'%{query}%', f'%{query}%', f'%{query}%'))
     else:
-        dataset = Orders.objects.raw(
+        dataset = Orders.objects.raw.select_related('equipment_group')(
         '''
             SELECT * FROM "Orders"
             JOIN "Machine" ON "Orders".equipment_name_id = "Machine".id
             WHERE (CASE
-                    WHEN %s != 'ALL' THEN "Machine"."group" = %s
-                    ELSE "Machine"."group" IS NOT NULL
+                    WHEN %s != 1 THEN "Machine"."equipment_group_id" = %s
+                    ELSE "Machine"."equipment_group_id" IS NOT NULL
                 END)
             AND (CASE
                     WHEN %s != 'ALL' THEN "Orders".status = %s
@@ -72,20 +72,28 @@ def orders_view(request):
     #         equipment_name__group__isnull=False),
     #     (Q(status=order_status) | Q(status__isnull=True)) if order_status != 'ALL' else Q(status__isnull=False)
     # )
-
     context = {
         "orders_and_equipment": dataset
     }
+    for el in context["orders_and_equipment"]:
+        print(el.equipment_group_id)
+    for el  in Machine.objects.select_related('equipment_group'):
+        print(el.equipment_group)
     return render(request, template, context)
 
 def create_order (request):
     template = "equipment/create_order.html"
-    machine = Machine.objects.raw(
+    machines = Machine.objects.raw(
         '''
-            SELECT * FROM "Machine"
-            ''')
+        SELECT * FROM "Machine";
+        ''')
+    groups = Machine.objects.raw(
+        '''
+        SELECT DISTINCT "equipment_group_id", id  from "Machine";
+        ''')
     context = {
-        "equipment_class": machine
+        "machines": machines,
+        "groups": groups
     }
     return render(request, template, context)
 

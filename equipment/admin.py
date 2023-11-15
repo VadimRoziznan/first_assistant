@@ -1,23 +1,31 @@
 from django.contrib import admin
-from equipment.models import Machine, Orders
+from equipment.models import Machine, Orders, MachineGroup
 
 
 class OrdersInline(admin.TabularInline):
     model = Orders
     extra = 1
 
+@admin.register(MachineGroup)
+class MachineGroupAdmin(admin.ModelAdmin):
+    list_display = [
+        "group"
+    ]
+    list_filter = ["group"]
+
 
 @admin.register(Machine)
 class MachineAdmin(admin.ModelAdmin):
     inlines = [OrdersInline]
+
     list_display = [
         "name",
         "photo",
-        "group",
+        "equipment_group",
         "status",
         "factory_floor"
     ]
-    list_filter = ["group", "status"]
+    list_filter = ["equipment_group", "status"]
 
 
 @admin.register(Orders)

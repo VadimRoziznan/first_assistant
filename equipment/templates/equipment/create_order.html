@@ -89,9 +89,9 @@
                             <label class="select-equipment">
                                 <span class="field-name">Номер цеха(корпуса):</span>
                                 <select class="select_equipment_data" name="equipment_class"  required>
-                                    {% for el in equipment_class %}
+                                    {% for el in machines %}
                                     <option value="" hidden></option>
-                                    <option class="option-values"  value="{{ el.name }}">{{ el.name }}</option>
+                                    <option class="option-values"  value="{{ el.factory_floor }}">{{ el.factory_floor }}</option>
                                     {% endfor %}
                                 </select>
                             </label>
@@ -100,9 +100,9 @@
                             <label class="select-equipment">
                                 <span class="field-name">Номер пролёта:</span>
                                 <select class="select_equipment_data" name="equipment_class"  required>
-                                    {% for el in equipment_class %}
+                                    {% for el in machines %}
                                     <option value="" hidden></option>
-                                    <option class="option-values" value="{{ el }}">{{ el }}</option>
+                                    <option class="option-values" value="{{ el.factory_number }}">{{ el.factory_number }}</option>
                                     {% endfor %}
                                 </select>
                             </label>
@@ -111,9 +111,9 @@
                             <label class="select-equipment">
                                 <span class="field-name">Класс оборудования:</span>
                                 <select class="select_equipment_data" name="equipment_class"  required>
-                                    {% for el in equipment_class %}
+                                    {% for el in groups %}
                                     <option value="" hidden></option>
-                                    <option class="option-values" value="{{ el.get_group_display }}">{{ el.get_group_display }}</option>
+                                    <option class="option-values" value="{{ el }}">{{ el.get_group_display }}</option>
                                     {% endfor %}
                                 </select>
                             </label>
@@ -122,9 +122,9 @@
                             <label class="select-equipment">
                                 <span class="field-name">Наименование оборудования:</span>
                                 <select class="select_equipment_data" name="equipment_name"  required>
-                                    {% for el in equipment_class %}
+                                    {% for el in machines %}
                                     <option value="" hidden></option>
-                                    <option class="option-values" value="{{ el }}">{{ el }}</option>
+                                    <option class="option-values" value="{{ el.name }}">{{ el.name }}</option>
                                     {% endfor %}
                                 </select>
                             </label>
@@ -133,9 +133,9 @@
                             <label class="select-equipment">
                                 <span class="field-name">Основание:</span>
                                 <select class="select_equipment_data" name="equipment_name"  required>
-                                    {% for el in equipment_class %}
+                                    {% for el in machines %}
                                     <option value="" hidden></option>
-                                    <option class="option-values" value="{{ el }}">{{ el }}</option>
+                                    <option class="option-values" value="{{ el.name }}">{{ el.name }}</option>
                                     {% endfor %}
                                 </select>
                             </label>
