@@ -144,15 +144,15 @@
             {% else %}
             <tr class="odd-row">
             {% endif %}
-            <td class="orders__item">{{ el.equipment_group_id }}</td>
+            <td class="orders__item">{{ el.equipment_name.equipment_group.get_group_display }}</td>
             <td class="orders__item">{{ el.equipment_name.name }}</td>
-            <td class="orders__item">{{ el.equipment_name.get_status_display }}</td>
+            <td class="orders__item">{{ el.equipment_name.get_machine_status_display }}</td>
             <td class="orders__item">{{ el.short_description }}</td>
             <td class="orders__item">{{ el.created_at|date:"d.m.Y H:i" }}</td>
             <td class="orders__item">{{ el.updated_at|date:"d.m.Y H:i"}}</td>
             <td class="orders__item">{{ el.get_status_display }}</td>
             <td class="orders__item">
-                <a href="{{ el.orders_files.url }}" download="">
+                <a href="{{ el.order_file_path.url }}">
                     <img class="download-img" src="/static/site_images/download.png">
                 </a>
             </td>

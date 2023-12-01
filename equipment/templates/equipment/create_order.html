@@ -82,16 +82,19 @@
             <h1 class="order-title">Регистрация новой заявки:</h1>
         </div>
         <div class="order-form-block">
-            <form id="order-form" action="" method="POST" class="order-form">
+            <form id="order-form" action="" enctype="multipart/form-data" method="POST" class="order-form">
+                {% csrf_token %}
                 <div class="order-container">
                     <div class="equipment-container">
                         <div class="equipment">
                             <label class="select-equipment">
                                 <span class="field-name">Номер цеха(корпуса):</span>
-                                <select class="select_equipment_data" name="equipment_class"  required>
-                                    {% for el in machines %}
+                                <select class="select_equipment_data" name="factory_number"  required>
+                                    {% for el in workshop_number %}
                                     <option value="" hidden></option>
-                                    <option class="option-values"  value="{{ el.factory_floor }}">{{ el.factory_floor }}</option>
+                                    <option class="option-values"
+                                            value="{{ elworkshop_number }}">{{ el.workshop_number }}
+                                    </option>
                                     {% endfor %}
                                 </select>
                             </label>
@@ -99,10 +102,12 @@
                         <div class="equipment">
                             <label class="select-equipment">
                                 <span class="field-name">Номер пролёта:</span>
-                                <select class="select_equipment_data" name="equipment_class"  required>
-                                    {% for el in machines %}
+                                <select class="select_equipment_data" name="factory_floor"  required>
+                                    {% for el in equipment_span_number %}
                                     <option value="" hidden></option>
-                                    <option class="option-values" value="{{ el.factory_number }}">{{ el.factory_number }}</option>
+                                    <option class="option-values"
+                                            value="{{ el.span_number }}">{{ el.span_number }}
+                                    </option>
                                     {% endfor %}
                                 </select>
                             </label>
@@ -110,42 +115,46 @@
                         <div class="equipment">
                             <label class="select-equipment">
                                 <span class="field-name">Класс оборудования:</span>
-                                <select class="select_equipment_data" name="equipment_class"  required>
+                                <select class="select_equipment_data" name="equipment_group"  required>
                                     {% for el in groups %}
                                     <option value="" hidden></option>
-                                    <option class="option-values" value="{{ el }}">{{ el.get_group_display }}</option>
+                                    <option class="option-values" value="{{ el.group }}">{{ el.get_group_display }}</option>
                                     {% endfor %}
                                 </select>
                             </label>
                         </div>
                         <div class="equipment">
-                            <label class="select-equipment">
+                            <label  class="select-equipment">
                                 <span class="field-name">Наименование оборудования:</span>
                                 <select class="select_equipment_data" name="equipment_name"  required>
                                     {% for el in machines %}
                                     <option value="" hidden></option>
-                                    <option class="option-values" value="{{ el.name }}">{{ el.name }}</option>
+                                    <option class="option-values" value="{{ el.id }}">{{ el.name }}</option>
                                     {% endfor %}
                                 </select>
                             </label>
                         </div>
                         <div class="equipment">
                             <label class="select-equipment">
-                                <span class="field-name">Основание:</span>
-                                <select class="select_equipment_data" name="equipment_name"  required>
-                                    {% for el in machines %}
+                                <span class="field-name">Причина:</span>
+                                <select class="select_equipment_data" name="reason"  required>
+                                    {% for el in reason %}
                                     <option value="" hidden></option>
-                                    <option class="option-values" value="{{ el.name }}">{{ el.name }}</option>
+                                    <option class="option-values" value="{{ el.reason }}">{{ el.reason }}</option>
                                     {% endfor %}
                                 </select>
                             </label>
                         </div>
                     </div>
-                    <div class="order-text">
-                        <span class="field-name">Список необходимых материалов:</span>
-                        <textarea class="order-textarea" name="create-order" id="" cols="70" rows="7" maxlength="1000"
-                                  required spellcheck="true" wrap="hard" placeholder="Заполните форму..."></textarea>
+                    <div class="upload_file">
+                        {{ form.as_p }}
+                        
                     </div>
+<!--                    <div class="order-text">-->
+<!--                        <span class="field-name">Список необходимых материалов:</span>-->
+<!--                        <textarea class="order-textarea" name="create-order" id="" cols="70" rows="7" maxlength="1000"-->
+<!--                                  required spellcheck="true" wrap="hard" placeholder="Заполните форму..."></textarea>-->
+<!--                    </div>-->
                 </div>
 
             </form>

@@ -1,3 +1,5 @@
+import re
+from urllib.parse import quote
 from django.db import models
 
 
@@ -41,7 +43,31 @@ class MachineGroup(models.Model):
         verbose_name_plural = 'Группы'
 
     def __str__(self):
-        return self.get_group_display()
+        return self.group
+
+
+class WorkshopNumber(models.Model):
+
+    workshop_number = models.CharField(
+        max_length=50, null=True, unique=True
+    )
+
+    class Meta:
+        db_table = 'WorkshopNumber'
+        verbose_name_plural = 'Наименование(номер) корпуса'
+
+    def __str__(self):
+        return self.workshop_number
+
+
+class SpanNumber(models.Model):
+
+    span_number = models.IntegerField(unique=True, null=True)
+
+    class Meta:
+        db_table = 'SpanNumber'
+        verbose_name_plural = 'Номер пролёта'
+
 
 class Machine(models.Model):
 
@@ -54,29 +80,30 @@ class Machine(models.Model):
 
         return path
 
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=90)
     photo = models.ImageField(
         upload_to=machine_file_path,
         null=True,
         blank=True
     )
-
-    status = models.TextField(
+    machine_status = models.TextField(
         choices=MachineStatusChoices.choices,
         default=MachineStatusChoices.OPERATED,
     )
-    # group = models.TextField(
-    #     choices=MachineGroupChoices.choices,
-    #     default=MachineGroupChoices.OTHER,
-    # )
     equipment_group = models.ForeignKey(
         MachineGroup, on_delete=models.PROTECT,
         blank=True,
-        related_name="equipment_group",
+        related_name="machine_group",
         null=True,
     )
-    factory_floor = models.IntegerField(default=1)
-    factory_number = models.IntegerField(default=1)
+    equipment_workshop_number = models.ForeignKey(
+        WorkshopNumber, on_delete=models.PROTECT,
+        related_name="machine_workshop_number", null=True, to_field="workshop_number"
+    )
+    equipment_span_number = models.ForeignKey(
+        SpanNumber, on_delete=models.PROTECT,
+        related_name="machine_span_number", null=True, to_field="span_number"
+    )
 
     class Meta:
         db_table = 'Machine'
@@ -91,32 +118,51 @@ class Archive(models.Model):
     name = models.CharField(max_length=100)
 
 
+class Reason(models.Model):
+
+    reason = models.CharField(
+        max_length=250, null=True, unique=True
+    )
+
+    class Meta:
+        db_table = 'Reason'
+        verbose_name_plural = 'Причина заявки'
+
+    def __str__(self):
+        return self.reason
+
+
 class Orders(models.Model):
 
-    def orders_file_path(self, filename):
+    def orders_file_path(instance, filename):
         # Получаем имя связанного оборудования
-        print(self.id)
-        equipment_name = self.equipment_name.name
+        equipment_name = instance.equipment_name.name
         # Формируем путь: "photos/machines/<equipment_name>/<filename>"
-        path = f'orders/{equipment_name}/{filename}'
+        path = f"orders/{equipment_name}/{filename}"
         return path
 
-    id = models.BigAutoField(primary_key=True)
     equipment_name = models.ForeignKey(
         Machine, on_delete=models.CASCADE,
         related_name="machine"
     )
     short_description = models.TextField(
         max_length=500,
-        null=True
+        null=True,
+        default="test"
     )
     status = models.TextField(
         choices=OrdersStatusChoices.choices,
         default=OrdersStatusChoices.OPEN,
     )
-    orders_files = models.FileField(upload_to=orders_file_path, null=True)
+    file_name = models.CharField(max_length=90, null=True, blank=True)
+    order_file_path = models.FileField(upload_to=orders_file_path, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    order_reason = models.ForeignKey(
+        Reason, on_delete=models.PROTECT,
+        related_name="orders_reason", null=True, to_field="reason"
+    )
+    reason = models.CharField(max_length=250, null=True, blank=True)
 
 
 
@@ -124,7 +170,11 @@ class Orders(models.Model):
         db_table = 'Orders'
         verbose_name_plural = 'Заявки'
 
+    def __str__(self):
+        return self.status
 
 
 class Stock(models.Model):
     pass
+
+
