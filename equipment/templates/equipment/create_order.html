@@ -6,6 +6,8 @@
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
     <link rel="stylesheet" href="{% static 'css/orders.css' %}">
     <link rel="stylesheet" href="{% static 'css/create_order.css' %}">
+    <script src="{% static 'js/create_order.js' %}"></script>
+
     <title>Title</title>
 </head>
 <body>
@@ -146,9 +148,48 @@
                             </label>
                         </div>
                     </div>
-                    <div class="upload_file">
-                        {{ form.as_p }}
-                        
+<!--                    <div class="upload_file">-->
+<!--                        {{ form.as_p }}-->
+<!--                        -->
+<!--                    </div>-->
+                    <div class="order_field">
+                        <table class="orders-table">
+                            <tr>
+                                <th class="orders_header__item">№</th>
+                                <th class="orders_header__item">Номенклатура</th>
+                                <th class="orders_header__item">Кол-во</th>
+                                <th class="orders_header__item">Ед. изм.</th>
+                            </tr>
+                            <tr id="orders-create-block">
+                                <td id="number_1" class="orders__item">1.</td>
+                                <td class="orders__item">
+                                    <textarea name="" id="" cols="45"  class="order-position"
+                                              autocomplete="on" spellcheck="true" wrap="soft"
+                                              contenteditable="true" rows="1" oninput="adjustTextareaHeight(this)">
+
+                                    </textarea>
+<!--                                    <input type="text" class="order-position" name="order-position">-->
+                                </td>
+                                <td class="orders__item">
+                                    <input type="text" class="order-quantity" name="order-position">
+                                </td>
+                                <td class="orders__item">
+                                    <select class="select-order" name=""  required>
+                                        <option value="шт." selected>шт.</option>
+                                        <option value="кг.">кг.</option>
+                                        <option value="л.">л.</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="add-remove-field">
+                            <button class="add-field-btn" type="button">
+                                Добавить поле
+                            </button>
+                            <button class="remove-field-btn" type="button">
+                                Удалить поле
+                            </button>
+                        </div>
                     </div>
 <!--                    <div class="order-text">-->
 <!--                        <span class="field-name">Список необходимых материалов:</span>-->

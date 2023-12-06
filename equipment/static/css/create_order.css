@@ -75,13 +75,76 @@
     margin: 0 auto 0 auto;
 }
 
+
+
+.orders-table {
+    display: flex;
+    width: 100%;
+    margin: 0;
+
+}
+
+.orders_header__item {
+    width: auto;
+    height: auto;
+}
+
+.orders__item {
+    width: auto;
+    height: auto;
+}
+
+.order-position {
+    font-family: "PT Sans", "Arial", sans-serif;
+    
+    min-height: 18px;
+    overflow: hidden;
+    resize: none;
+    border: none;
+    outline: none;
+    text-align: left;
+
+}
+
+.order-quantity {
+    font-family: "PT Sans", "Arial", sans-serif;
+    width: 40px;
+    text-align: right;
+    border: none;
+    outline: none;
+}
+
 .order-textarea {
     margin: 17px 0 0 0;
     resize: none;
     overflow: auto;
     font-size: 16px;
-    font-family: 'Times New Roman', serif;
+    font-family: 'Times New Roman', sans-serif;
     padding: 16px;
+}
+
+.select-order {
+    font-family: "PT Sans", "Arial", sans-serif;
+    width: 100%;
+    text-align: right;
+    border: none;
+    outline: none;
+    background-color: white;
+}
+
+.add-remove-field {
+    display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: right;
+}
+
+.add-field-btn {
+    margin: 20px 0 20px 0;
+}
+
+.remove-field-btn {
+    margin: 20px 0 20px 10px;
 }
 
 .create-order {
