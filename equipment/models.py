@@ -6,10 +6,10 @@ from django.db import models
 class OrdersStatusChoices(models.TextChoices):
     """Статусы заявок."""
 
+    DRAFT = "DRAFT", "Черновик"
     OPEN = "OPEN", "Открыто"
     FULFILLED = "FULFILLED", "Исполнено"
     NOT_RELEVANT = "NOT_RELEVANT", "Неактуально"
-    DRAFT = "DRAFT", "Черновик"
 
 
 class MachineStatusChoices(models.TextChoices):
@@ -162,7 +162,7 @@ class Orders(models.Model):
         Reason, on_delete=models.PROTECT,
         related_name="orders_reason", null=True, to_field="reason"
     )
-    reason = models.CharField(max_length=250, null=True, blank=True)
+    # reason = models.CharField(max_length=250, null=True, blank=True)
 
 
 
@@ -172,6 +172,23 @@ class Orders(models.Model):
 
     def __str__(self):
         return self.status
+
+
+class OrderItems(models.Model):
+    item = models.TextField(max_length=1000, null=True)
+    quantity = models.IntegerField(null=True, default=0)
+    unit = models.CharField(max_length=10, null=True)
+    order = models.ForeignKey(
+        Orders, on_delete=models.CASCADE,
+        related_name='order', null=True
+    )
+
+    class Meta:
+        db_table = 'OrderItems'
+        verbose_name_plural = 'Пункты'
+
+    def __str__(self):
+        return self.item
 
 
 class Stock(models.Model):

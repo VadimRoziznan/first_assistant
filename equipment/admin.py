@@ -40,7 +40,7 @@ class OrdersAdmin(admin.ModelAdmin):
         "order_file_path",
         "created_at",
         "updated_at",
-        "reason"
+        "order_reason"
     ]
     list_filter = ["status"]
 

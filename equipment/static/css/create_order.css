@@ -91,25 +91,27 @@
 
 .orders__item {
     width: auto;
-    height: auto;
+    height: 36px;
 }
 
 .order-position {
     font-family: "PT Sans", "Arial", sans-serif;
-    
-    min-height: 18px;
+    width: 300px;
+    height: 18px;
     overflow: hidden;
     resize: none;
     border: none;
     outline: none;
-    text-align: left;
+    /*text-align: left;*/
+    padding: 0;
+    
 
 }
 
 .order-quantity {
     font-family: "PT Sans", "Arial", sans-serif;
     width: 40px;
-    text-align: right;
+    text-align: center;
     border: none;
     outline: none;
 }

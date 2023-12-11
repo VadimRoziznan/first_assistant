@@ -84,7 +84,7 @@
             <h1 class="order-title">Регистрация новой заявки:</h1>
         </div>
         <div class="order-form-block">
-            <form id="order-form" action="" enctype="multipart/form-data" method="POST" class="order-form">
+            <form id="order-form" action="{% url 'create_order' %}" enctype="multipart/form-data" method="POST" class="order-form" name="order-form">
                 {% csrf_token %}
                 <div class="order-container">
                     <div class="equipment-container">
@@ -95,7 +95,7 @@
                                     {% for el in workshop_number %}
                                     <option value="" hidden></option>
                                     <option class="option-values"
-                                            value="{{ elworkshop_number }}">{{ el.workshop_number }}
+                                            value="{{ el.workshop_number }}">{{ el.workshop_number }}
                                     </option>
                                     {% endfor %}
                                 </select>
@@ -142,7 +142,17 @@
                                 <select class="select_equipment_data" name="reason"  required>
                                     {% for el in reason %}
                                     <option value="" hidden></option>
-                                    <option class="option-values" value="{{ el.reason }}">{{ el.reason }}</option>
+                                    <option class="option-values" value="{{ el.id }}">{{ el.reason }}</option>
+                                    {% endfor %}
+                                </select>
+                            </label>
+                        </div>
+                        <div class="equipment">
+                            <label class="select-equipment">
+                                <span class="field-name">Статус заявки:</span>
+                                <select class="select_equipment_data" name="choices"  required>
+                                    {% for value, label in choices %}
+                                    <option class="option-values" value="{{ value }}">{{ label }}</option>
                                     {% endfor %}
                                 </select>
                             </label>
@@ -160,24 +170,22 @@
                                 <th class="orders_header__item">Кол-во</th>
                                 <th class="orders_header__item">Ед. изм.</th>
                             </tr>
-                            <tr id="orders-create-block">
+                            <tr id="orders-create-block" name="fff">
                                 <td id="number_1" class="orders__item">1.</td>
-                                <td class="orders__item">
-                                    <textarea name="" id="" cols="45"  class="order-position"
-                                              autocomplete="on" spellcheck="true" wrap="soft"
-                                              contenteditable="true" rows="1" oninput="adjustTextareaHeight(this)">
-
-                                    </textarea>
-<!--                                    <input type="text" class="order-position" name="order-position">-->
+                                <td class="orders__item" name="">
+                                    <textarea form="order-form" name="textarea_1" id="" class="order-position"
+                                              autocomplete="on" spellcheck="true" wrap="hard"
+                                              contenteditable="true" rows="1" required oninput="adjustTextareaHeight(this)"></textarea>
                                 </td>
                                 <td class="orders__item">
-                                    <input type="text" class="order-quantity" name="order-position">
+                                    <input type="text" class="order-quantity" name="quantity_1" required>
                                 </td>
                                 <td class="orders__item">
-                                    <select class="select-order" name=""  required>
+                                    <select class="select-order" name="unit_1" required>
                                         <option value="шт." selected>шт.</option>
                                         <option value="кг.">кг.</option>
                                         <option value="л.">л.</option>
+                                        <option value="л.">м.</option>
                                     </select>
                                 </td>
                             </tr>
@@ -191,13 +199,7 @@
                             </button>
                         </div>
                     </div>
-<!--                    <div class="order-text">-->
-<!--                        <span class="field-name">Список необходимых материалов:</span>-->
-<!--                        <textarea class="order-textarea" name="create-order" id="" cols="70" rows="7" maxlength="1000"-->
-<!--                                  required spellcheck="true" wrap="hard" placeholder="Заполните форму..."></textarea>-->
-<!--                    </div>-->
                 </div>
-
             </form>
         </div>
     </div>
