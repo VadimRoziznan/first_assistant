@@ -18,6 +18,7 @@ from equipment.models import Orders, Machine, MachineGroup, WorkshopNumber, Span
 from equipment.serializers import OrdersSerializer, MachineNameSerializer
 
 from datetime import datetime
+from .utils.processing import WordFileEditor
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -114,8 +115,8 @@ def create_order(request: HttpRequest):
         # order_position = request.POST.get('order-position')
         date_now = datetime.now().strftime("%d.%m.%Y")
         data = request.POST.dict()
-        pprint(data)
-        new_order = Orders(equipment_name=Machine.objects.get(id=data.get('equipment_name')))
+        machine = Machine.objects.get(id=data.get('equipment_name'))
+        new_order = Orders(equipment_name=machine)
         new_order.save()
 
         order = Orders.objects.get(id=new_order.id)
@@ -125,14 +126,23 @@ def create_order(request: HttpRequest):
         order.order_file_path = 'orders/Горизонтально - расточной станок 2А637Ф1/Заявка_19_от_28.11.2023.doc'
         order.save()
 
+        new_order_items_list = []
+
         while data.get(f'textarea_{count_for_textarea}'):
             new_order_items = OrderItems()
             new_order_items.order = Orders(id=new_order.id)
             new_order_items.item = data.get(f'textarea_{count_for_textarea}')
             new_order_items.quantity = data.get(f'quantity_{count_for_textarea}')
             new_order_items.unit = data.get(f'unit_{count_for_textarea}')
+            nomenclature = new_order_items.item.replace('\n', '')
+            new_order_items_list.append(f"{nomenclature} - {new_order_items.quantity} {new_order_items.unit}")
             new_order_items.save()
             count_for_textarea += 1
+
+        name_folder = machine.name
+        file_name = f"Заявка №{new_order.id} от {date_now}"
+        new_word_file = WordFileEditor(name_folder, file_name, new_order_items_list)
+        new_word_file.main()
 
         # new_order_items.save()
 
