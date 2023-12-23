@@ -48,9 +48,9 @@ class WordFileEditor:
             f"\tДля предотвращения выхода из строя {name_equipment} прошу Вас приобрести:\n", style='UserStyle'
         )
 
-        # for style in document.styles:
-        #     print("style.name == %s" % style.name)
-        #
+        for style in document.styles:
+            print("style.name == %s" % style.name)
+
         # styles = []
         # for paragraph in document.paragraphs:
         #     styles.append(paragraph.style)
@@ -61,10 +61,11 @@ class WordFileEditor:
 
         for el in text:
             p = document.add_paragraph(
-                el, style='List Number'
+                el, style='List Number 3'
             )
             p.runs[0].font.name = 'Times New Roman'
             p.runs[0].font.size = Pt(14)
+
 
         return document
 
@@ -88,9 +89,7 @@ class WordFileEditor:
         for index, word in enumerate(new_text):
             if len(word) > 3:
                 try:
-                    print(word)
                     parsed_word = morph.parse(word)[0]
-                    print(gender)
                     if 'masc' in gender:
                         new_text[index] = parsed_word.inflect({'gent', 'masc'}).word
                     elif 'femn' in gender:
@@ -109,3 +108,4 @@ class WordFileEditor:
     def write_word(self, document, path_to_folder, file_name):
         full_path = rf'{path_to_folder}/{file_name}.docx'
         document.save(full_path)
+

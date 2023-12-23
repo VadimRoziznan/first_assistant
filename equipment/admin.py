@@ -2,6 +2,7 @@ from django.contrib import admin
 from equipment.models import Machine, Orders, MachineGroup, WorkshopNumber, SpanNumber, Reason
 
 
+
 class OrdersInline(admin.TabularInline):
     model = Orders
     extra = 1
@@ -43,6 +44,7 @@ class OrdersAdmin(admin.ModelAdmin):
         "order_reason"
     ]
     list_filter = ["status"]
+
 
 
 @admin.register(WorkshopNumber)

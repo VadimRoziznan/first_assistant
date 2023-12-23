@@ -123,12 +123,13 @@ def create_order(request: HttpRequest):
         order.file_name = f"Заявка №{new_order.id} от {date_now}"
         order.order_reason = Reason.objects.get(id=data.get('reason'))
         order.status = OrdersStatusChoices[data.get('choices')]
-        order.order_file_path = 'orders/Горизонтально - расточной станок 2А637Ф1/Заявка_19_от_28.11.2023.doc'
+        order.order_file_path = f"orders/{machine.name}/Заявка №{new_order.id} от {date_now}.docx"
         order.save()
 
         new_order_items_list = []
 
         while data.get(f'textarea_{count_for_textarea}'):
+            print(len(data.get(f'textarea_{count_for_textarea}')))
             new_order_items = OrderItems()
             new_order_items.order = Orders(id=new_order.id)
             new_order_items.item = data.get(f'textarea_{count_for_textarea}')
