@@ -48,8 +48,8 @@ class WordFileEditor:
             f"\tДля предотвращения выхода из строя {name_equipment} прошу Вас приобрести:\n", style='UserStyle'
         )
 
-        for style in document.styles:
-            print("style.name == %s" % style.name)
+        # for style in document.styles:
+        #     print("style.name == %s" % style.name)
 
         # styles = []
         # for paragraph in document.paragraphs:

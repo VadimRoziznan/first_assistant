@@ -1,4 +1,5 @@
 import re
+from datetime import datetime
 from urllib.parse import quote
 from django.db import models
 
@@ -140,6 +141,36 @@ class Orders(models.Model):
         # Формируем путь: "photos/machines/<equipment_name>/<filename>"
         path = f"orders/{equipment_name}/{filename}"
         return path
+
+    def save(self, *args, **kwargs):
+        if not self.order_number:
+            try:
+                orders_data = Orders.objects.raw(
+                    '''
+                    SELECT id, order_number, created_at 
+                    FROM "Orders"
+                    WHERE EXTRACT(YEAR FROM created_at) = (
+                    SELECT MAX(EXTRACT(YEAR FROM created_at))
+                    FROM "Orders")
+                    ORDER BY order_number DESC
+                    LIMIT 1;
+                    ''')
+            except:
+                self.order_number = 1
+            if len(orders_data) > 0:
+                order_number = orders_data[0].order_number
+                created_at = str(orders_data[0].created_at)
+                parsed_date = datetime.fromisoformat(created_at)
+                year_last_order = parsed_date.year
+                current_year = datetime.now().year
+                if current_year > year_last_order:
+                    self.order_number = 1
+                else:
+                    self.order_number = order_number + 1
+                print(order_number, year_last_order, current_year)
+        super(Orders, self).save(*args, **kwargs)
+
+    order_number = models.IntegerField(verbose_name='Номер заявки в текущем году.')
 
     equipment_name = models.ForeignKey(
         Machine, on_delete=models.CASCADE,
