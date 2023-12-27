@@ -12,7 +12,7 @@ from re import fullmatch
 
 class WordFileEditor:
 
-    def __init__(self, name_folder, file_name, text):
+    def __init__(self, name_folder, file_name, order_reason, text):
         """
         :param name_folder:
         :param file_name:
@@ -21,6 +21,7 @@ class WordFileEditor:
         self.name_folder = name_folder
         self.file_name = file_name
         self.text = text
+        self.order_reason = order_reason
         self.relative_path = 'media/samples/your_doc_name.docx'
         self.current_dir_path = Path(__file__).resolve().parent.parent.parent
         self.file_path = os.path.join(self.current_dir_path, self.relative_path)
@@ -44,8 +45,9 @@ class WordFileEditor:
         style.font.underline = False
         style.paragraph_format.alignment = WD_PARAGRAPH_ALIGNMENT.LEFT
         name_equipment = self.declension(self.name_folder)
+        reason = self.declension(self.order_reason, 'sing')
         document.add_paragraph(
-            f"\tДля предотвращения выхода из строя {name_equipment} прошу Вас приобрести:\n", style='UserStyle'
+            f"\tДля {reason} {name_equipment} прошу Вас приобрести:\n", style='UserStyle'
         )
 
         # for style in document.styles:
@@ -66,7 +68,6 @@ class WordFileEditor:
             p.runs[0].font.name = 'Times New Roman'
             p.runs[0].font.size = Pt(14)
 
-
         return document
 
     def create_folder(self, name_folder):
@@ -77,14 +78,15 @@ class WordFileEditor:
         else:
             return path
 
-    def declension(self, text):
+    def declension(self, text, gender=None):
         new_text = text.split()
         morph = MorphAnalyzer()
-        gender = 'masc'
-        for word in reversed(new_text):
-            if self.check_word_is_rus(word) and len(word) > 3:
-                gender = morph.parse(word)[0].tag.gender
-                break
+
+        if not gender:
+            for word in reversed(new_text):
+                if self.check_word_is_rus(word) and len(word) > 3:
+                    gender = morph.parse(word)[0].tag.gender
+                    break
 
         for index, word in enumerate(new_text):
             if len(word) > 3:
@@ -94,6 +96,8 @@ class WordFileEditor:
                         new_text[index] = parsed_word.inflect({'gent', 'masc'}).word
                     elif 'femn' in gender:
                         new_text[index] = parsed_word.inflect({'gent', 'femn'}).word
+                    else:
+                        new_text[index] = parsed_word.inflect({'gent', 'sing'}).word
                 except Exception as e:
                     if self.check_word_is_rus(word):
                         new_text[index] = word.lower()

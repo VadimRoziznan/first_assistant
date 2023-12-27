@@ -167,7 +167,8 @@ class Orders(models.Model):
                     self.order_number = 1
                 else:
                     self.order_number = order_number + 1
-                print(order_number, year_last_order, current_year)
+            else:
+                self.order_number = 1
         super(Orders, self).save(*args, **kwargs)
 
     order_number = models.IntegerField(verbose_name='Номер заявки в текущем году.')

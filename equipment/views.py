@@ -141,7 +141,8 @@ def create_order(request: HttpRequest):
 
         name_folder = machine.name
         file_name = f"Заявка №{new_order.order_number} от {date_now}"
-        new_word_file = WordFileEditor(name_folder, file_name, new_order_items_list)
+        reason = str(order.order_reason).lower()
+        new_word_file = WordFileEditor(name_folder, file_name, reason, new_order_items_list)
         new_word_file.main()
 
         # new_order_items.save()
