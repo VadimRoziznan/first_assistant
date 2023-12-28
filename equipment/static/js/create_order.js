@@ -67,3 +67,21 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 
 
+const lll = document.querySelector('#lll')  
+
+
+document.addEventListener('DOMContentLoaded', function(event) {
+    
+    const l = document.querySelector('#factory_number2')
+    
+    if (l) {
+        l.onclick = () => {
+            console.log(l)
+        }
+    }
+
+})
+
+
+
+

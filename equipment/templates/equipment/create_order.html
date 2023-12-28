@@ -89,12 +89,12 @@
                 <div class="order-container">
                     <div class="equipment-container">
                         <div class="equipment">
-                            <label class="select-equipment">
+                            <label id="lll" class="select-equipment">
                                 <span class="field-name">Номер цеха(корпуса):</span>
-                                <select class="select_equipment_data" name="factory_number"  required>
+                                <select id="factory_number" class="select_equipment_data" name="factory_number"  required>
                                     {% for el in workshop_number %}
                                     <option value="" hidden></option>
-                                    <option class="option-values"
+                                    <option id="factory_number2" class="option-values"
                                             value="{{ el.workshop_number }}">{{ el.workshop_number }}
                                     </option>
                                     {% endfor %}
