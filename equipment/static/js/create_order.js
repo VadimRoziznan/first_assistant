@@ -78,10 +78,6 @@ document.addEventListener("DOMContentLoaded", function() {
       
           // Получаем CSRF-токен из куки
           const csrftoken = getCookie('csrftoken');
-      
-          // Создаем объект FormData и добавляем выбранную опцию
-          const formData = new FormData();
-          formData.append('selectedOption', selectedOption);
 
           const data = {
             factory_number: selectedOption
