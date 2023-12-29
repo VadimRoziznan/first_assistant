@@ -24,6 +24,105 @@ document.addEventListener("DOMContentLoaded", function() {
     const orderPosition = document.querySelector("order-position");
     let idNumberNewField = 2;
 
+    /* Получаем Номер цеха(корпуса) */
+ /*   const selectElement = document.getElementById('factory_number');
+
+    selectElement.addEventListener('change', function() {
+        const selectedOption = selectElement.options[selectElement.selectedIndex].value;
+        console.log(selectedOption);
+        fetch('/create-order/')
+        .then(response => {
+            // Обработка полученного ответа
+            return response;
+          })
+        .then(console.log(response))
+    });*/
+
+
+    /*const selectElement = document.getElementById('factory_number');
+    selectElement.addEventListener('change', function () {
+        const selectedOption = selectElement.options[selectElement.selectedIndex].value;
+        console.log(selectedOption);
+        fetch('/create-order/')
+          .then(response => {
+            return response;
+          })
+      });*/
+
+
+      /*const selectElement = document.getElementById('factory_number');
+      selectElement.addEventListener('change', function () {
+          const selectedOption = selectElement.options[selectElement.selectedIndex].value;
+          console.log(selectedOption);
+      
+          // Создаем объект FormData и добавляем выбранную опцию
+          const formData = new FormData();
+          formData.append('selectedOption', selectedOption);
+      
+          // Отправляем запрос на сервер с использованием метода POST и передаем данные formData
+          fetch('/create-order/', {
+              method: 'POST',
+              body: formData
+          })
+          .then(response => {
+              return response; // Возвращает ответ сервера
+          })
+      });*/
+
+
+
+      const selectElement = document.getElementById('factory_number');
+      selectElement.addEventListener('change', function () {
+          const selectedOption = selectElement.options[selectElement.selectedIndex].value;
+          console.log(selectedOption);
+      
+          // Получаем CSRF-токен из куки
+          const csrftoken = getCookie('csrftoken');
+      
+          // Создаем объект FormData и добавляем выбранную опцию
+          const formData = new FormData();
+          formData.append('selectedOption', selectedOption);
+
+          const data = {
+            factory_number: selectedOption
+          };
+          
+          const jsonData = JSON.stringify(data);
+      
+          // Отправляем запрос на сервер с использованием метода POST, устанавливаем заголовок X-CSRFToken
+          fetch('/create-order/', {
+              method: 'PUT',
+              body: jsonData,
+              headers: {
+                  'X-CSRFToken': csrftoken
+              }
+          })
+          .then(response => {
+              return response; // Возвращает ответ сервера
+          })
+      });
+      
+      // Функция для получения CSRF-токена из куки
+      function getCookie(name) {
+          let cookieValue = null;
+          if (document.cookie && document.cookie !== '') {
+              const cookies = document.cookie.split(';');
+              for (let i = 0; i < cookies.length; i++) {
+                  const cookie = cookies[i].trim();
+                  // Находим куку с именем name
+                  if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                      cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                      break;
+                  }
+              }
+          }
+          return cookieValue;
+      }
+
+    
+
+    
+
     addFieldBtn.addEventListener("click", () => {
         const table = document.querySelector('tbody'); // Выбираем таблицу
         const newRow = document.createElement('tr'); // Создаем новую строку
@@ -67,20 +166,8 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 
 
-const lll = document.querySelector('#lll')  
 
 
-document.addEventListener('DOMContentLoaded', function(event) {
-    
-    const l = document.querySelector('#factory_number2')
-    
-    if (l) {
-        l.onclick = () => {
-            console.log(l)
-        }
-    }
-
-})
 
 
 

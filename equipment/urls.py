@@ -26,6 +26,6 @@ from equipment.views import home_view, equipment_view, OrdersViewSet, MachineVie
 urlpatterns = [
     path('', home_view, name='home'),
     path('order/', orders_view, name="order"),
-    path('create-order/', create_order, name="create_order")
+    path('create-order/', create_order, name="create_order"),
 
  ] #+ router.urls

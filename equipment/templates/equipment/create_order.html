@@ -94,7 +94,7 @@
                                 <select id="factory_number" class="select_equipment_data" name="factory_number"  required>
                                     {% for el in workshop_number %}
                                     <option value="" hidden></option>
-                                    <option id="factory_number2" class="option-values"
+                                    <option class="option-values"
                                             value="{{ el.workshop_number }}">{{ el.workshop_number }}
                                     </option>
                                     {% endfor %}
@@ -210,5 +210,6 @@
 </main>
 <div class="footer">
 </div>
+
 </body>
 </html>

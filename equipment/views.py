@@ -1,10 +1,12 @@
+import json
 import os
 from pprint import pprint
 
 from django.core.files.storage import FileSystemStorage
 from django.db.models import Q
-from django.http import HttpResponse, HttpRequest
+from django.http import HttpResponse, HttpRequest, JsonResponse
 from django.shortcuts import render
+from django.views.decorators.csrf import csrf_protect
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.filters import SearchFilter, OrderingFilter
@@ -86,7 +88,16 @@ def handle_uploaded_file(f, path):
             destination.write(chunk)
 
 
-def create_order(request: HttpRequest):
+@csrf_protect
+def create_order(request):
+
+    if request.method == 'PUT':
+
+        body = request.body.decode('utf-8')
+        data = json.loads(body)
+        factory_number = data.get('factory_number')
+        print(factory_number)
+
 
     template = "equipment/create_order.html"
     form = UploadFileForm()
@@ -167,6 +178,10 @@ def create_order(request: HttpRequest):
     #         order_file.name = f"Заявка '№{new_order.id} от {date_now}{file_extension}"
     #         order.order_file_path = order_file
     #         order.save()
+
+
+
+
     context = {
         "machines": machines,
         "groups": groups,
